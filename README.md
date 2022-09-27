@@ -1,9 +1,9 @@
 # lab2022
 Repositório para Lab 2/2022.
 
-Trabalhos:\n
+Trabalhos:
         - T1;
         
-Exercícios:\n
+Exercícios:
         - ;
         

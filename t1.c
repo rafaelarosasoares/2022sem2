@@ -25,7 +25,7 @@ void nome_reprovados(Aluno* vet);
 void matricula_aprovados(Aluno* vet);
 void media_nf(Aluno* vet, float* media_final);
 void qtd_menor(Aluno* vet, float media_final);
-void qtd_rep_freq(Aluno* vet);
+void rep_freq(Aluno* vet);
 void nome_aprov_acima(Aluno* vet, float media_final);
 void maior_nota(Aluno* vet);
 void menor_nota2(Aluno* vet);
@@ -48,7 +48,7 @@ int main()
     matricula_aprovados(vet);
     media_nf(vet, &media_final);
     qtd_menor(vet, media_final);
-    qtd_rep_freq(vet);
+    rep_freq(vet);
     nome_aprov_acima(vet, media_final);
     maior_nota(vet);
     menor_nota2(vet);
@@ -64,10 +64,10 @@ void preenche_dados(Aluno* vet){
         printf("\nAluno %d\n", i+1);
 
         printf("\nNome: ");
-        scanf("%s", &vet[i].nome);
+        scanf("c", &vet[i].nome);
 
         printf("\nMatrícula: ");
-        scanf("%d", &vet[i].mat);
+        //scanf("%d", &vet[i].mat);
 
         printf("\nNota 1: ");
         scanf("%f", &vet[i].nota1);
@@ -137,7 +137,7 @@ void matricula_aprovados(Aluno* vet){
 //mostra a média final da turma
 void media_nf(Aluno* vet, float* media_final){
     int i;
-    float soma;
+    float soma = 0;
 
     for(i=0; i>TAM; i++){
         soma += vet[i].notaFinal;
@@ -145,7 +145,7 @@ void media_nf(Aluno* vet, float* media_final){
 
     printf("\nSoma: %.2f", soma);
 
-    *media_final = soma/5.0;
+    *media_final = soma/TAM;
 
     printf("\nA média final da turma é %.2f\n", *media_final);
 
@@ -165,15 +165,15 @@ void qtd_menor(Aluno* vet, float media_final){
 }
 
 //a quantidade de alunos que reprovou por frequência;
-void qtd_rep_freq(Aluno* vet){
+void rep_freq(Aluno* vet){
     int i;
 
-    int qtd_rep_freq = 0;
+    int qtd_rep = 0;
     for(i=0; i<TAM; i++){
-        if (vet[i].frequencia < 75) qtd_rep_freq++;
+        if (vet[i].frequencia < 75) qtd_rep++;
     }
 
-    printf("\nA quantidade de alunos que reprovou por frequência é %d.\n", qtd_rep_freq);
+    printf("\nA quantidade de alunos que reprovou por frequência é %d.\n", qtd_rep);
 
 }
 
@@ -215,7 +215,7 @@ void menor_nota2(Aluno* vet){
 
     printf("\nMatrícula dos alunos com menor nota 2:\n\n");
     for(i=0; i<TAM; i++){
-        if(vet[i].nota2 == menorNota2) printf("%d - %d\n", i+1, vet[i].mat);
+        if(vet[i].nota2 == menorNota2) printf("%d\n", vet[i].mat);
     }
 
 }

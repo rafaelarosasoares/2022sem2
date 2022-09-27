@@ -21,8 +21,8 @@ typedef struct {
     int qtd_abaixo;
     int qtd_rep_freq;
     float media_final;
-    int maior_nota[3];
-    int menor_nota[3];
+    float maior_nota;
+    float menor_nota;
 }Turma;
 
 void preenche_dados(Aluno* vet);
@@ -36,7 +36,7 @@ void qtd_menor(Aluno* vet, Turma* turma);
 void qtd_rep_freq(Aluno* vet, Turma* turma);
 void nome_aprov_acima(Aluno* vet, Turma* turma);
 void maior_nota(Aluno* vet, Turma* turma);
-void maior_nota2(Aluno* vet, Turma* turma);
+void menor_nota2(Aluno* vet, Turma* turma);
 
 int main()
 {
@@ -56,7 +56,7 @@ int main()
     qtd_rep_freq(vet, &turma);
     nome_aprov_acima(vet, &turma);
     maior_nota(vet, &turma);
-    maior_nota2(vet, &turma);
+    menor_nota2(vet, &turma);
 
     return 0;
 }
@@ -124,9 +124,7 @@ void nome_reprovados(Aluno* vet){
 
     printf("\nAlunos reprovados:\n");
     for(i=0; i<TAM; i++){
-        if(vet[i].status == 'R'){
-            printf("\n%d - Nome: %s", i+1, vet[i].nome);
-        }
+        if(vet[i].status == 'R') printf("\n%d - Nome: %s", i+1, vet[i].nome); 
     }
 
 }
@@ -137,10 +135,9 @@ void matricula_aprovados(Aluno* vet){
 
     printf("\nAlunos aprovados: \n");
     for(i=0; i<TAM; i++){
-        if(vet[i].status == 'A'){
-            printf("\nMatrícula: %d", vet[i].mat);
-        }
+        if(vet[i].status == 'A') printf("\nMatrícula: %d", vet[i].mat);
     }
+
 }
 
 //mostra a média final da turma
@@ -148,9 +145,7 @@ void media_nf(Aluno* vet, Turma* turma){
     int i;
     float soma = 0;
     
-    for(i=0; i>TAM; i++){
-        soma =+ vet[i].notaFinal;
-    }
+    for(i=0; i>TAM; i++) soma =+ vet[i].notaFinal;
 
     turma->media_final = soma/TAM;
 
@@ -190,28 +185,37 @@ void nome_aprov_acima(Aluno* vet, Turma* turma){
 
     printf("\nAlunos aprovados e acima da média final da turma: ");
     for(i=0; i<TAM; i++){
-        if((vet[i].status == 'A') && (vet[i].notaFinal >= turma->media_final)){
-            printf("\nNome: %s", vet[i].nome);
-        }
+        if((vet[i].status == 'A') && (vet[i].notaFinal >= turma->media_final)) printf("\nNome: %s", vet[i].nome);
     }
+
 }
 
-//maior nota da turma
+//nome dos alunos com maior nota da turma
 void maior_nota(Aluno* vet, Turma* turma){
-    int i, j;
+    int i;
 
-    turma->maior_nota[0] = vet[0].notaFinal;
     for(i=0; i<TAM; i++){
-        for(j=0; j<TAM; j++){
-            if(turma->maior_nota[j] > turma->maior_nota[j+1]){
-                swap(turma->maior_nota[j], turma->maior_nota[j+1]);
-            }
+        if(vet[i].notaFinal > turma->maior_nota) turma->maior_nota = vet[i].notaFinal;
+    }
 
-        }
+    printf("\nAluno(s) com maior nota final: \n");
+    for(i = 0; i < TAM; i++){
+        if(vet[i].notaFinal == turma->maior_nota) printf("%s\n", vet[i].nome);
     }
 
 }
 
-void maior_nota2(Aluno* vet, Turma* turma){
+//matricula dos alunos que obtiveram menor nota 2
+void menor_nota2(Aluno* vet, Turma* turma){
+    int i;
+
+    for(i=0; i<TAM; i++){
+        if(vet[i].nota2 < turma->menor_nota) turma->menor_nota = vet[i].nota2;
+    }
+
+    printf("\nMatrícula dos alunos com menor nota 2:\n");
+    for(i=0; i<TAM; i++){
+        if(vet[i].nota2 == turma->menor_nota) printf("%d\n", vet[i].mat);
+    }
 
 }

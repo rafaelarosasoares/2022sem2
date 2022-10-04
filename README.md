@@ -1,9 +1,16 @@
 # lab2022
-Repositório para Lab 2/2022.
+Repositório para SEMESTRE 2;
 
 Trabalhos:
         - T1;
+        - T2 (não iniciado);
+
         
-Exercícios:
-        - ;
+# ed20222
+
+Deise:
+        Exercícios:
+                - Lista 1 (Deise);
+
+Candia: 
         

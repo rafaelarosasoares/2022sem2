@@ -60,14 +60,16 @@ int main()
 void preenche_dados(Aluno* vet){
     int i;
 
+    printf("Bem vindo(a) ao sistema de boletim da turma XX, preencha os dados a seguir: \n");
+
     for(i=0; i<TAM; i++){
         printf("\nAluno %d\n", i+1);
 
         printf("\nNome: ");
-        scanf("c", &vet[i].nome);
+        scanf(" [^\n]", &vet[i].nome);
 
         printf("\nMatrícula: ");
-        //scanf("%d", &vet[i].mat);
+        scanf("%d", &vet[i].mat);
 
         printf("\nNota 1: ");
         scanf("%f", &vet[i].nota1);
@@ -137,9 +139,9 @@ void matricula_aprovados(Aluno* vet){
 //mostra a média final da turma
 void media_nf(Aluno* vet, float* media_final){
     int i;
-    float soma = 0;
+    float soma = 0.0;
 
-    for(i=0; i>TAM; i++){
+    for(i=0; i<TAM; i++){
         soma += vet[i].notaFinal;
     }
 
@@ -183,7 +185,7 @@ void nome_aprov_acima(Aluno* vet, float media_final){
 
     printf("\nAlunos aprovados e acima da média final da turma: \n\n");
     for(i=0; i<TAM; i++){
-        if((vet[i].status == 'A') && (vet[i].notaFinal >= media_final)) printf("%d - Nome: %s\n", i+1, vet[i].nome);
+        if((vet[i].status == 'A') && (vet[i].notaFinal >= media_final)) printf("Nome: %s\n", vet[i].nome);
     }
 
 }

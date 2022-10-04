@@ -5,7 +5,7 @@
 #include <locale.h>
 #include <string.h>
 
-#define TAM 3
+#define TAM 5
 
 typedef struct {
     int mat;

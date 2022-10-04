@@ -17,8 +17,7 @@ typedef struct {
     char status;
 }Aluno;
 
-void preenche_dados(Aluno* vet);
-void calcula_nf(Aluno* vet);
+void preenche(Aluno* vet, int i, int mat, char* nome, float nota1, float nota2, int frequencia);
 void mostra_dados(Aluno* vet);
 void altera_status(Aluno* vet);
 void nome_reprovados(Aluno* vet);
@@ -36,12 +35,15 @@ int main()
 
     Aluno vet[TAM];
     float media_final = 0;
+    char nome[81];
+    float nota1, nota2;
+    int i, mat, frequencia;
 
-    preenche_dados(vet);
+
+    preenche(vet, i, mat, nome, nota1, nota2, frequencia);
 
     system("cls");
 
-    calcula_nf(vet);
     mostra_dados(vet);
     altera_status(vet);
     nome_reprovados(vet);
@@ -57,38 +59,43 @@ int main()
 }
 
 //armazena os dados de um novo aluno numa posição do vetor.
-void preenche_dados(Aluno* vet){
-    int i;
+void preenche(Aluno* vet, int i, int mat, char* nome, float nota1, float nota2, int frequencia){
 
-    printf("Bem vindo(a) ao sistema de boletim da turma XX, preencha os dados a seguir: \n");
+    printf("Preencha os dados a seguir: \n");
 
     for(i=0; i<TAM; i++){
+
         printf("\nAluno %d\n", i+1);
 
         printf("\nNome: ");
-        scanf(" [^\n]", &vet[i].nome);
+        scanf(" [^\n]", nome);
+
+        strcpy(vet[i].nome, nome);
 
         printf("\nMatrícula: ");
-        scanf("%d", &vet[i].mat);
+        scanf("%d", &mat);
+
+        vet[i].mat = mat;
 
         printf("\nNota 1: ");
-        scanf("%f", &vet[i].nota1);
+        scanf("%f", &nota1);
+
+        vet[i].nota1 = nota1;
 
         printf("\nNota 2: ");
-        scanf("%f", &vet[i].nota2);
+        scanf("%f", &nota2);
+
+        vet[i].nota2 = nota2;
 
         printf("\nFrequência: ");
-        scanf("%d", &vet[i].frequencia);
-    };
+        scanf("%d", &frequencia);
+
+        vet[i].frequencia = frequencia;
+
+        vet[i].notaFinal = nota1 + nota2 / 2.0;
+    }
 }
 
-//calcula nota final por aluno
-void calcula_nf(Aluno* vet){
-    int i;
-
-    for(i=0; i<TAM; i++) vet[i].notaFinal = (vet[i].nota1 + vet[i].nota2)/2.0;
-
-}
 
 //mostra os dados dos alunos
 void mostra_dados(Aluno* vet){

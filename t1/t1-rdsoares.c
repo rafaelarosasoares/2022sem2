@@ -5,7 +5,7 @@
 #include <locale.h>
 #include <string.h>
 
-#define TAM 5
+#define TAM 3
 
 typedef struct {
     int mat;
@@ -43,13 +43,13 @@ int main(){
 
     for(i=0; i<TAM; i++){
 
-    coleta_dados(nome, &mat, &nota1, &nota2, &frequencia, i);
-    preenche(vet, i, mat, nome, nota1, nota2, frequencia);
+        coleta_dados(nome, &mat, &nota1, &nota2, &frequencia, i);
+        preenche(vet, i, mat, nome, nota1, nota2, frequencia);
 
     }
 
     setbuf(stdin, NULL);
-    //system("cls");
+    system("cls");
 
     mostra_dados(vet);
     altera_status(vet);
@@ -73,17 +73,16 @@ void coleta_dados(char* nome, int* mat, float* nota1, float* nota2, int* frequen
     scanf(" %[^\n]", nome);
 
     printf("\nMatrícula: ");
-    scanf("%d", &mat);
+    scanf("%d", &*mat);
 
     printf("\nNota 1: ");
-    scanf("%f", &nota1);
+    scanf("%f", &*nota1);
 
     printf("\nNota 2: ");
-    scanf("%f", &nota2);
+    scanf("%f", &*nota2);
 
     printf("\nFrequência: ");
-    scanf("%d", &frequencia);
-
+    scanf("%d", &*frequencia);
 
 }
 
@@ -94,7 +93,7 @@ void preenche(Aluno* vet, int i, int mat, char* nome, float nota1, float nota2, 
     vet[i].nota1 = nota1;
     vet[i].nota2 = nota2;
     vet[i].frequencia = frequencia;
-    vet[i].notaFinal = nota1 + nota2 / 2.0;
+    vet[i].notaFinal = (nota1 + nota2) / 2.0;
 }
 
 //mostra os dados dos alunos
@@ -102,6 +101,7 @@ void mostra_dados(Aluno* vet){
     int i;
 
     printf("\nDADOS DOS ALUNOS: \n");
+
     for(i=0; i<TAM; i++){
         printf("\nAluno: %s\n\n", vet[i].nome);
         printf("Matrícula: %d\n", vet[i].mat);

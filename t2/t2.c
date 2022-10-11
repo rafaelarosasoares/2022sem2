@@ -1,3 +1,5 @@
+//NOME: RAFAELA DA ROSA SOARES // MATRICULA 202211338
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,21 +7,24 @@
 #include <stdbool.h>
 
 void tam_matriz(int *lin, int *col);
-void preenche_matriz(char* matriz, int lin, int col);
+char** aloca_matriz(int lin, int col);
+void preenche_matriz(char** matriz, int lin, int col);
 void remove_espaco(char*matriz, int lin, int col);
 void imprime_matriz(int lin, int col, char matriz);
-void pega_palavra(char* palavra, char* matriz, int lin, int col);
-bool checa_vertical(char matriz, char palavra);
-bool checa_horizontal(char matriz, char palavra);
-bool checa_diagonais(char matriz, char palavra);
-void busca(char matriz, char palavra, int li, int col);
+void pega_palavra(char* palavra, int lin, int col);
+bool checa_diagonais(char palavra, char matriz, int lin, int col);
+bool checa_horizontais(char palavra, char matriz, int lin, int col);
+bool checa_verticais(char palavra, char matriz, int lin, int col)
+void retorna_posicao(char** matriz, char* palavra, int lin, int col);
 void funcionamento_geral(char matriz, char palavra, int lin, int col);
+void dealloc(char** matriz, int lin);
 
 int main(){
     setlocale(LC_ALL, "Portuguese");
 
     int lin, col;
     char palavra[81];
+    char** matriz;
 
     setbuf(stdin, NULL);
 
@@ -29,18 +34,16 @@ int main(){
 
         tam_matriz(&lin, &col);
 
-        char matriz[lin][col];
-
         do{
-            preenche_matriz(matriz, lin, col);
+            matriz = aloca_matriz(lin, col);
+            preenche_matriz();
             remove_espaco(matriz, lin, col);
             imprime_matriz(matriz, lin, col);
             funcionamento_geral(matriz, palavra, lin, col);
+            dealloc(matriz, lin);
         } while(true);
 
     } while(true);
-    
-    
 
     return 0;
 }
@@ -55,54 +58,79 @@ void tam_matriz(int *lin, int *col){
 
 }
 
-void preenche_matriz(char* matriz, int lin, int col){
-    printf("\nPreencha a matriz do caça-palavras, seguindo a ordem de %d por %d", lin, col);
+char** aloca_matriz(int lin, int col){
+    char **matriz = (char**)malloc(*lin * sizeof(char*));
+    for(int i=0; i<lin; i++)
+        matriz[i] = (char*)malloc(*col * sizeof(char));
 
-    for(int i=1; i<=lin; i++){
-        for(int j=1; j<=col; j++){
-            scanf("[ ^\n]", matriz);
-        }
-    }
+    return matriz;
 } 
 
-void remove_espaco(char*matriz, int lin, int col){
+void preenche_matriz(char** matriz, int lin, int col){
+    char string[lin * col];,
+
+    printf("\nInsira texto para alocar na matriz: ");
+    scanf("%s", string);
+
+    int aux = 0;
+
+    for(int i=0; i<lin; i++){
+        for(int j=0; j<col; j++){
+            if(string[aux] == '\0') matriz[i][j] = '*';
+            if(string[aux] != '\0' && string[aux] != 32) matriz[i][j] = string[aux];
+            if(string[aux] != '\0') aux++;
+            if(string[aux] == 32) j--;
+        }
+    }
+}
+
+void remove_espaco(char** matriz, int lin, int col){
+    int aux_i = 0, aux_j = 0;
+
+    for(int i=0; i<lin; i++){
+        for(int j=0; j<col; j++){
+            if (matriz[i][j] != ' ') matriz[aux_i++][aux_j++] = matriz[i][j]; 
+            matriz[aux_i][aux_j] = '\0';
+        }
+    }
 
 }
 
-void imprime_matriz(int lin, int col, char matriz){
+void imprime_matriz(int lin, int col, char** matriz){
     for(int i=0; i<lin; i++){
-        for(int j=0; j<lin; j++){
+        for(int j=0; j<col; j++)
             printf("%c", matriz[i][j]);
-        }
+        printf("\n");
     }
 }
 
-char pega_palavra(char* palavra, char matriz, int lin, int col){
+void pega_palavra(char* palavra, int lin, int col){
+    char string[lin * col];
     printf("\nEscreva a palavra a ser encontrada: \n");
-    scanf(" %[^\n]", palavra);
-    int size = strlen(palavra);
+    scanf(" %[^\n]", string);
 
-    for(int i=0; i<lin; i++){
-        for(int j=0; j<col; j++){
-            if (size <= lin*col){
-                
-            }
-        }
-    }
+    strcpy(palavra, string);
 }
 
+bool checa_diagonais(char* palavra, char** matriz, int lin, int col){}
 
+bool checa_horizontais(char* palavra, char** matriz, int lin, int col){}
 
-void busca(char matriz, char palavra, int li, int col){
-    for (int i=0; i<lin; i++){
-        for(int j=0; j<col; j++){
+bool checa_verticais(char* palavra, char** matriz, int lin, int col){}
 
-        }
-    }
+void retorna_posicao(char** matriz, char* palavra, int lin, int col){}
+
+void funcionamento_geral(char** matriz, char* palavra, int lin, int col){
+    pega_palavra(palavra, lin, col); 
+
+    if (checa_diagonais(palavra, matriz, lin, col)) retorna_posicao(matriz, palavra, lin, col);
+    else if (checa_horizontais(palavra, matriz, lin, col)) retorna_posicao(matriz, palavra, lin, col);
+    else if (checa_verticais(palavra, matriz, lin, col)) retorna_posicao(matriz, palavra, lin, col);
+    else break;
 }
-void funcionamento_geral(char matriz, char palavra, int lin, int col){
-    do{
-        pega_palavra(palavra, matriz, lin, col);
-        
-    }while(true);
+
+void dealloc(char** matriz, int lin){
+    for(int i=0; i<lin; i++)
+        free(matriz[i]);
+    free(matriz);
 }

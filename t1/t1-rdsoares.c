@@ -17,8 +17,8 @@ typedef struct {
     char status;
 }Aluno;
 
-void preenche_dados(Aluno* vet);
-void calcula_nf(Aluno* vet);
+void coleta_dados(char* nome, int* mat, float* nota1, float* nota2, int* frequencia, int i);
+void preenche(Aluno* vet, int i, int mat, char* nome, float nota1, float nota2, int frequencia);
 void mostra_dados(Aluno* vet);
 void altera_status(Aluno* vet);
 void nome_reprovados(Aluno* vet);
@@ -30,18 +30,27 @@ void nome_aprov_acima(Aluno* vet, float media_final);
 void maior_nota(Aluno* vet);
 void menor_nota2(Aluno* vet);
 
-int main()
-{
+int main(){
     setlocale(LC_ALL, "Portuguese");
 
     Aluno vet[TAM];
     float media_final = 0;
+    char nome[81];
+    float nota1, nota2;
+    int i, mat, frequencia;
 
-    preenche_dados(vet);
+    printf("Preencha os dados a seguir: \n");
 
+    for(i=0; i<TAM; i++){
+
+        coleta_dados(nome, &mat, &nota1, &nota2, &frequencia, i);
+        preenche(vet, i, mat, nome, nota1, nota2, frequencia);
+
+    }
+
+    setbuf(stdin, NULL);
     system("cls");
 
-    calcula_nf(vet);
     mostra_dados(vet);
     altera_status(vet);
     nome_reprovados(vet);
@@ -56,38 +65,35 @@ int main()
     return 0;
 }
 
-//armazena os dados de um novo aluno numa posição do vetor.
-void preenche_dados(Aluno* vet){
-    int i;
+void coleta_dados(char* nome, int* mat, float* nota1, float* nota2, int* frequencia, int i){
 
-    printf("Bem vindo(a) ao sistema de boletim da turma XX, preencha os dados a seguir: \n");
+    printf("\nAluno %d\n", i+1);
 
-    for(i=0; i<TAM; i++){
-        printf("\nAluno %d\n", i+1);
+    printf("\nNome: ");
+    scanf(" %[^\n]", nome);
 
-        printf("\nNome: ");
-        scanf(" [^\n]", &vet[i].nome);
+    printf("\nMatrícula: ");
+    scanf("%d", &*mat);
 
-        printf("\nMatrícula: ");
-        scanf("%d", &vet[i].mat);
+    printf("\nNota 1: ");
+    scanf("%f", &*nota1);
 
-        printf("\nNota 1: ");
-        scanf("%f", &vet[i].nota1);
+    printf("\nNota 2: ");
+    scanf("%f", &*nota2);
 
-        printf("\nNota 2: ");
-        scanf("%f", &vet[i].nota2);
+    printf("\nFrequência: ");
+    scanf("%d", &*frequencia);
 
-        printf("\nFrequência: ");
-        scanf("%d", &vet[i].frequencia);
-    };
 }
 
-//calcula nota final por aluno
-void calcula_nf(Aluno* vet){
-    int i;
-
-    for(i=0; i<TAM; i++) vet[i].notaFinal = (vet[i].nota1 + vet[i].nota2)/2.0;
-
+//armazena os dados de um novo aluno numa posição do vetor.
+void preenche(Aluno* vet, int i, int mat, char* nome, float nota1, float nota2, int frequencia){
+    strcpy(vet[i].nome, nome);
+    vet[i].mat = mat;
+    vet[i].nota1 = nota1;
+    vet[i].nota2 = nota2;
+    vet[i].frequencia = frequencia;
+    vet[i].notaFinal = (nota1 + nota2) / 2.0;
 }
 
 //mostra os dados dos alunos
@@ -95,6 +101,7 @@ void mostra_dados(Aluno* vet){
     int i;
 
     printf("\nDADOS DOS ALUNOS: \n");
+
     for(i=0; i<TAM; i++){
         printf("\nAluno: %s\n\n", vet[i].nome);
         printf("Matrícula: %d\n", vet[i].mat);

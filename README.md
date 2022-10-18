@@ -8,7 +8,7 @@ Trabalhos:
         
        - T1;
        
-       - T2 (não iniciado);
+       - T2;
 
         
 # ed20222
@@ -20,4 +20,8 @@ Deise:
                 - Lista 1 (Deise);
                 
 Candia: 
+
+        Trabalhos:
+
+                - T1;
         

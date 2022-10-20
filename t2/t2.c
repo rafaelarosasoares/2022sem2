@@ -12,10 +12,8 @@ const char* recebe_string(int lin, int col);
 void preenche_matriz(char** matriz, const char* string, int lin, int col);
 void imprime_matriz(char** matriz, int lin, int col);
 void pega_palavra(char* palavra, int lin, int col);
-bool checa_diagonais(char* palavra, char** matriz, int lin, int col);
-bool checa_horizontais(char* palavra, char** matriz, int lin, int col);
-bool checa_verticais(char* palavra, char** matriz, int lin, int col);
-void retorna_posicao(char** matriz, char* palavra, int lin, int col);
+int checa_existencia(char* palavra, char** matriz, int lin, int col);
+void retorna_posicao(char** matriz, char* palavra, int* pos1, int* pos2, int lin, int col);
 void funcionamento_geral(char** matriz, char* palavra, int lin, int col);
 void dealloc(char** matriz, int lin);
 
@@ -45,8 +43,9 @@ int main(){
         }
 
         printf("Deseja parar de jogar caça-palavras? Digite 0 se sim, 1 se não.");
-        scanf("%d", &fim);   
-    }while (fim);
+        scanf("%d", &fim);
+
+    }while(fim);
 
     return 0;
 }
@@ -113,15 +112,49 @@ void pega_palavra(char* palavra, int lin, int col){
     strcpy(palavra, string);
 }
 
-void funcionamento_geral(char** matriz, char* palavra, int lin, int col){ 
+int checa_existencia(char* palavra, char** matriz, int lin, int col){
+    int var = 0;
 
-    while(true){
-        pega_palavra(palavra, lin, col);
-        if (checa_diagonais(palavra, matriz, lin, col)) retorna_posicao(matriz, palavra, lin, col);
-        else if (checa_horizontais(palavra, matriz, lin, col)) retorna_posicao(matriz, palavra, lin, col);
-        else if (checa_verticais(palavra, matriz, lin, col)) retorna_posicao(matriz, palavra, lin, col);
+    if (/* condition */)
+    {
+        var = 1;
+    }else if (/* condition */)
+    {
+        var = 2;
+    }else{
+        var = 3;
     }
     
+    return var;
+}
+
+retorna_posicao(char** matriz, char* palavra, int pos1, int pos2, int lin, int col){
+
+}
+
+void funcionamento_geral(char** matriz, char* palavra, int lin, int col){ 
+    int var = 0;
+    int pos1[2], pos2[2];
+    while(true){
+        pega_palavra(palavra, lin, col);
+        var = checa_existencia(palavra, matriz, lin, col);
+
+        switch (var){
+        case 0:
+            printf("A palavra não ocorre.");
+            break;
+        case 1: // horizontal
+            retorna_posicao(matriz, palavra, pos1, pos2, lin, col);
+            if (pos1[1] < pos2[1]) printf("A palavra %c ocorre na horizontal direta, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", palavra, pos1[0], pos1[1], pos2[0], pos2[1]);
+            else if (pos2[1] > pos2[1]) printf("A palavra %c ocorre na horizontal da direita para esquerda, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", palavra, pos1[0], pos1[1], pos2[0], pos2[1]);
+            break;
+        case 2: //vertical
+            retorna_posicao(matriz, palavra, pos1, pos2, lin, col);
+            if (pos1[0] < pos2[0]) printf("A palavra %c ocorre na vertical direta, de cima para baixo, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", palavra, pos1[0], pos1[1], pos2[0], pos2[1]);
+            else if (pos2[0] > pos1[0]) printf("A palavra %c ocorre na vertical contrária, de baixo para cima, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", palavra, pos1[0], pos1[1], pos2[0], pos2[1]);
+            break;
+        case 3: // diagonal
+    }  
 }
 
 void dealloc(char** matriz, int lin){

@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Dell/Documents/CIÊNCIA DA COMPUTAÇÃO/2 SEM/lab2022/exercícios_ed",
-      "program": "c:/Users/Dell/Documents/CIÊNCIA DA COMPUTAÇÃO/2 SEM/lab2022/exercícios_ed/build/Debug/outDebug",
+      "cwd": "c:/Users/Dell/Documents/CIÊNCIA DA COMPUTAÇÃO/2 SEM/lab2022/exercícios_ed/lista2-MatAlocDin",
+      "program": "c:/Users/Dell/Documents/CIÊNCIA DA COMPUTAÇÃO/2 SEM/lab2022/exercícios_ed/lista2-MatAlocDin/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

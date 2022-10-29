@@ -1,0 +1,14 @@
+                                :: LISTAS ENCADEADAS ::
+
+    - > são estruturas de dados dinâmicas que crescem e decrescem, à medida em que são inseridos/removidos.
+
+        *o vetor é a forma mais primitiva de armazenamento de dados, não é flexível e o acesso comput. é alto;
+
+    - > sequência encadeada de elementos que são chamados de "nós da lista".
+
+    -> cada nó da lista é representado pela informação do espaço e um ponteiro para a próxima posição a ser preenchida;
+
+    -> representada por um ponteiro para o primeiro nó;
+    
+    -> na última posição aponta para NULL;
+    

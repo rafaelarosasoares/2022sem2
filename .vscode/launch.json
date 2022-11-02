@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Dell/Documents/CIÊNCIA DA COMPUTAÇÃO/2 SEM/lab2022/t2",
-      "program": "c:/Users/Dell/Documents/CIÊNCIA DA COMPUTAÇÃO/2 SEM/lab2022/t2/build/Debug/outDebug",
+      "cwd": "c:/Users/Dell/Documents/CIÊNCIA DA COMPUTAÇÃO/2 SEM/lab2022/ed/t1",
+      "program": "c:/Users/Dell/Documents/CIÊNCIA DA COMPUTAÇÃO/2 SEM/lab2022/ed/t1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

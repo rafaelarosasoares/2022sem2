@@ -4,17 +4,20 @@
 
 int main(){
     Edicao image;
-
+    int mat1[image->matX][image->matY][3];
+    int mat2[image->matX][image->matY][3];
     setbuf(stdin, NULL);
 
     do{
-        printf("\nEscolha opcao de arquivo para manipulacao de imagem: ");
-        scanf("%d", &image->opc);
-        
-        redireciona(image);
-        image->matriz = aloca_matriz(image);
-
-    }while(image->opc != 0);
+        if (!le_arq(image)) {
+            printf("\nArquivo incompatível.");
+            break;
+        }else{
+            mat1 = pega_mat(image, mat1);
+            mat2 = pega_mat(image, mat2);
+            menu(image, mat1, mat2);
+        }
+    }while(true);
 
     return 0;
 }

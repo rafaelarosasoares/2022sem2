@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <locale.h>
 #include <stdbool.h>
-
-typedef struct jogo Jogo;
 
 void tam_matriz(int *lin, int *col);
 
@@ -28,7 +25,7 @@ bool principal_inversa(char** matriz, int lin, int col, Jogo* p1);
 
 bool secundaria_direta(char** matriz, int lin, int col, Jogo* p1);
 
-bool secundaria_indireta(char** matriz, int lin, int col, Jogo* p1);
+bool secundaria_inversa(char** matriz, int lin, int col, Jogo* p1);
 
 bool checa_diagonais(char** matriz, int lin, int col, Jogo* p1);
 

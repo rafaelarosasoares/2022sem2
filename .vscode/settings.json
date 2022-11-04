@@ -28,5 +28,10 @@
     "**/.*/**",
     "**/.vscode",
     "**/.vscode/**"
-  ]
+  ],
+  "files.associations": {
+    "*.html": "html",
+    "*.c": "c",
+    "stdbool.h": "c"
+  }
 }

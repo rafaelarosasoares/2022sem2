@@ -1,15 +1,7 @@
-#include <auxiliar.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct jogo {
-    int xy1[2];
-    int xy2[2];
-    int qtd;
-    int tam_palavra;
-    int diagonal;
-    char* palavra;
-}Jogo;
+#include <string.h>
+#include <stdbool.h>
 
 void tam_matriz(int *lin, int *col){
 
@@ -301,18 +293,18 @@ void funcionamento_geral(char** matriz, int lin, int col, Jogo* p1, int* cont){
             printf("\nA palavra não ocorre.");
             break;
         case 1: // horizontal
-            if (p1.xy1[1] < p1.xy2[1]) printf("\nA palavra %c ocorre na horizontal direta, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1.xy1[0], p1.xy1[1], p1.xy2[0], p1.xt2[1]);
-            else printf("\nA palavra %c ocorre na horizontal da direita para esquerda, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1.xy2[0], p1.xy2[1], p1.xy1[0], p1.xy1[1]);
+            if (p1->xy1[1] < p1->xy2[1]) printf("\nA palavra %c ocorre na horizontal direta, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1->xy1[0], p1->xy1[1], p1->xy2[0], p1->xy2[1]);
+            else printf("\nA palavra %c ocorre na horizontal da direita para esquerda, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1->xy1[0], p1->xy1[1], p1->xy2[0], p1->xy2[1]);
             break;
         case 2: //vertical
-            if (p1.xy1[0] > p1.xy2[0]) printf("\nA palavra %c ocorre na vertical direta, de cima para baixo, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1.xy1[0], p1.xy1[1], p1.xy2[0], p1.xy2[1]);
-            else printf("\nA palavra %c ocorre na vertical contrária, de baixo para cima, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1.xy1[0], p1.xy1[1], p1.xy2[0], p1.xy2[1]);
+            if (p1->xy1[0] > p1->xy2[0]) printf("\nA palavra %c ocorre na vertical direta, de cima para baixo, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1->xy1[0], p1->xy1[1], p1->xy2[0], p1->xy2[1]);
+            else printf("\nA palavra %c ocorre na vertical contrária, de baixo para cima, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1->xy1[0], p1->xy1[1], p1->xy2[0], p1->xy2[1]);
             break;
         case 3:  // diagonal
-            if (p1->diagonal == 1) printf("\nA palavra %c ocorre na diagonal principal direta, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1.xy1[0], p1.xy1[1], p1.xy2[0], p1.xy2[1]);
-            else if (p1->diagonal == 2) printf("\nA palavra %c ocorre na principal inversa, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1.xy1[0], p1.xy1[1], p1.xy2[0], p1.xy2[1]);
-            else if(p1->diagonal == 3) pprintf("\nA palavra %c ocorre na secundária direta, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1.xy1[0], p1.xy1[1], p1.xy2[0], p1.xy2[1]);
-            else printf("\nA palavra %c ocorre na secundária inversa, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1.xy1[0], p1.xy1[1], p1.xy2[0], p1.xy2[1]);
+            if (p1->diagonal == 1) printf("\nA palavra %c ocorre na diagonal principal direta, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1->xy1[0], p1->xy1[1], p1->xy2[0], p1->xy2[1]);
+            else if (p1->diagonal == 2) printf("\nA palavra %c ocorre na principal inversa, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1->xy1[0], p1->xy1[1], p1->xy2[0], p1->xy2[1]);
+            else if(p1->diagonal == 3) pprintf("\nA palavra %c ocorre na secundária direta, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1->xy1[0], p1->xy1[1], p1->xy2[0], p1->xy2[1]);
+            else printf("\nA palavra %c ocorre na secundária inversa, iniciando na posição [%d,%d] e terminando na posição [%d,%d]", p1->palavra, p1->xy1[0], p1->xy1[1], p1->xy2[0], p1->xy2[1]);
             break;
         }
         *cont++;

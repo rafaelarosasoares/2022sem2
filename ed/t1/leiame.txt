@@ -1,0 +1,16 @@
+Nome: Rafaela da Rosa Soares
+Matrícula: 202211338
+
+Filtros de cor:
+
+Preto e branco:
+    A imagem fica em preto e branco, igualando o valor da matriz ao anterior.
+
+Ajuste de canal de cor: 
+    É possível escolher entre um filtro vermelho, azul ou verde, aumentando o valor de R ou G ou B de acordo com a opção selecionada;
+
+Rotação de imagem:
+    É possível girar a imagem em 90°.
+
+Greenscreen:
+    Não funciona.

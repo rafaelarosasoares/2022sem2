@@ -1,12 +1,21 @@
-                                :: LISTAS ENCADEADAS ::
+ 
+
+                             :: LISTAS ENCADEADAS ::
 
     - > são estruturas de dados dinâmicas que crescem e decrescem, à medida em que são inseridos/removidos.
 
-        *o vetor é a forma mais primitiva de armazenamento de dados, não é flexível e o acesso comput. é alto;
+        *o vetor é a forma mais primitiva de armazenamento de dados, não é flexível e o acesso computacional pra armazenamento é alto;
 
     - > sequência encadeada de elementos que são chamados de "nós da lista".
 
-    -> cada nó da lista é representado pela informação do espaço e um ponteiro para a próxima posição a ser preenchida;
+    -> cada nó da lista é representado pela informação do espaço e um ponteiro para a próxima posição a ser preenchida (dentro de uma struct); 
+
+        struct lista{
+            int info;
+            struct lista* prox;
+        };
+
+    -> a lista inicialmente é criada vazia e à medida que se inserem elementos vai crescendo de tamanho (ou seja, dinamico)
 
     -> representada por um ponteiro para o primeiro nó;
     

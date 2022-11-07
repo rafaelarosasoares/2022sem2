@@ -1,0 +1,6 @@
+            ::LISTAS ENCADEADAS::
+
+    -> remocao:
+        -> inicio - meio - ultimo elemento
+        -> dependendo da posicao, alguns apontadores precisarao ser arrumados para que se mantenha o encadeamento correto de lista 
+        -> atualiza o valor da lista, se o elemento removido for o primeiro; se nao, apenas remove o elemento da lista

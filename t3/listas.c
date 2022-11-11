@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 Lista* cria_lista(void){
     return l = NULL;
@@ -46,7 +47,8 @@ void preenche_paciente(Pacientes paciente, Lista* l){
         scanf("%d", &paciente.CPF);
         printf("\nTelefone: ");
         scanf("%d", &paciente.tel);
-
+        //aq fazer um if pra conferir se o paciente ja nao esta no banco de dados
+        //if true break
         l = insere_paciente(l, paciente);
 
         printf("\nPara parar de inserir, digite 0: ");
@@ -70,7 +72,7 @@ void preenche_consulta(Lista* l, Consultas consulta, Lista* horarios, Lista* med
     for(int i = 0; opt != 0; i++){
         printf("\nCPF do paciente: ");
         scanf("%d", &cpf);
-        if(!busca_paciente(cpf, pacientes, consulta)) break; // se for falso eu retornar um bool false | else troco o valor do paciente ali dentro da funcao
+        if(!busca_paciente(cpf, pacientes, consulta)) break; // se for falso eu retornar um bool false | else troco o valor do consulta.paciente ali dentro da funcao
         printf("\nCRM do medico: ");
         scanf("%d", &crm);
         if(!busca_medico(crm, medicos, consulta)) break; //medico da consulta muda dentro dessa funcao
@@ -101,9 +103,27 @@ void preenche_data(Lista* horarios, Consultas consulta){
     Data data_hora;
     int opt;
 
-    for(i = 0; opt != 0; i++){
+    for(i = 0; consulta.status != true; i++){
+        printf("\nHora: ");
+        scanf("%d", &data_hora.hora);
+        printf("\nMinuto: ");
+        scanf("%d", &data_hora.minuto);
+        printf("\nDia: ");
+        scanf("%d", &data_hora.dia);
+        printf("\nMes: ");
+        scanf("%d", &data_hora.mes);
+        printf("\nAno: ");
+        scanf("%d", &data_hora.ano);
 
+        if(!busca_hora(data_hora, horarios)) printf("\nInsira data e hora novamente.");
+        else insere_horario(horarios, data_hora);
     }
 }
 
-Lista* insere_data(Lista* horarios, )
+Lista* insere_data(Lista* horarios, Data data_hora){
+    Lista* novo = (Lista*)malloc(sizeof(Lista));
+    novo->info = data_hora;
+    novo->prox = l;
+    return novo;
+}
+

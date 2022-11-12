@@ -11,15 +11,16 @@ Lista* cria_lista(void){
 void preenche_medico(Medicos* medico, Lista* l){
     printf("\nPreencha os dados dos médicos: \n");
     int opt;
-    char nome_med[50];
+    char nome_med[50], area[50];
     for(int i = 0; opt != 0; i++){
         printf("\nNome: ");
         scanf("%[ ^\n]", nome_med);
-        strcpy(medico.nome, nome_med);
+        strcpy(medico->nome, nome_med);
         printf("\nCRM: ");
-        scanf("%d", &medico.CRM);
+        scanf("%d", &medico->crm);
         printf("\nArea de atuacao: ");
-        scanf("%[ ^\n]", &medico.area);
+        scanf("%[ ^\n]", area);
+        strcpy(medico.area, area);
 
         l = insere_medicos(l, medico);
 
@@ -39,16 +40,14 @@ void preenche_paciente(Pacientes* paciente, Lista* l){
     int opt;
     char nome_pac[50];
 
-    for(int i = 0; opt != 0; i++){
+    for(int i = 0; opt != 0 || busca_paciente(paciente->cpf, pacientes) ; i++){
         printf("\nNome: ");
         scanf("%[ ^\n]", nome_pac);
-        strcpy(paciente.nome, nome_pac);
+        strcpy(paciente->nome, nome_pac);
         printf("\nCPF: ");
-        scanf("%d", &paciente.CPF);
+        scanf("%d", &paciente->cpf);
         printf("\nTelefone: ");
-        scanf("%d", &paciente.tel);
-        //aq fazer um if pra conferir se o paciente ja nao esta no banco de dados
-        //if true break
+        scanf("%d", &paciente->tel);
         l = insere_paciente(l, paciente);
 
         printf("\nPara parar de inserir, digite 0: ");

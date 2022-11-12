@@ -4,22 +4,22 @@
 #include <stdlib.h>
 
 int main(void){
-    Lista* medicos, pacientes, consultas, horarios;
-    Medicos* medico; Consultas consulta; Pacientes paciente; 
-    int opt, usuario;
-    // fazer um laço de repetição gigante aqui pra girar sempre no cadastro de medico e paciente de acordo com a necessidade do do while da main de agendamento
-    medico = cria_lista();
-    paciente = cria_lista();
-    consulta = cria_lista();
-    
-    do{
-        printf("Seja bem-vindo ao sistema, digite 1 caso voce seja funcionario da clica, 2 se for paciente, 0 se deseja sair do sistema: ");
-        scanf("%d", &usuario);
+    Lista* medicos = cria_lista();
+    Lista* pacientes = cria_lista();
+    Lista* consultas = cria_lista();
+    Lista* horarios = cria_lista();
 
+    Medicos* medico;
+    Consultas consulta;
+    Pacientes paciente;
+    int opt, usuario;
+
+    do{
+        printf("Seja bem-vindo ao sistema, digite 1 caso voce seja funcionario da clinica, 2 se for paciente, 0 se deseja sair do sistema: "); scanf("%d", &usuario);
         if(usuario == 1){
             do{
-                preenche_medico(medico, medicos);
-                preenche_paciente(paciente, pacientes);
+                preenche_medico(medico, medicos); system("cls");
+                preenche_paciente(paciente, pacientes); system("cls");
             }while(true);
         }
         if(usuario == 2){

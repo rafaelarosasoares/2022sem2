@@ -5,11 +5,11 @@
 #include <stdbool.h>
 
 Lista* cria_lista(void){
-    return l = NULL;
+    return NULL;
 }
 
-void preenche_medico(Medicos medico, Lista* l){
-    printf("\nPreencha os dados dos mÃ©dicos: \n");
+void preenche_medico(Medicos* medico, Lista* l){
+    printf("\nPreencha os dados dos médicos: \n");
     int opt;
     char nome_med[50];
     for(int i = 0; opt != 0; i++){
@@ -28,14 +28,14 @@ void preenche_medico(Medicos medico, Lista* l){
     }
 }
 
-Lista* insere_medicos(Lista* l, Medicos medico){
+Lista* insere_medicos(Lista* l, Medicos* medico){
     Lista* novo = (Lista*)malloc(sizeof(Lista));
     novo->info = medico;
     novo->prox = l;
     return novo;
 }
 
-void preenche_paciente(Pacientes paciente, Lista* l){
+void preenche_paciente(Pacientes* paciente, Lista* l){
     int opt;
     char nome_pac[50];
 
@@ -56,14 +56,14 @@ void preenche_paciente(Pacientes paciente, Lista* l){
     }
 }
 
-Lista* insere_paciente(Lista* l, Pacientes paciente){
+Lista* insere_paciente(Lista* l, Pacientes* paciente){
     Lista* novo = (Lista*)malloc(sizeof(Lista));
     novo->info = paciente;
     novo->prox = l;
     return novo;
 }
 
-void preenche_consulta(Lista* l, Consultas consulta, Lista* horarios, Lista* medicos, Lista* pacientes){
+void preenche_consulta(Lista* l, Consultas* consulta, Lista* horarios, Lista* medicos, Lista* pacientes){
     printf("Preencha os dados da consulta com atencao: ");
     int opt, crm, cpf;
     char desc[150], convenio[50];
@@ -91,15 +91,15 @@ void preenche_consulta(Lista* l, Consultas consulta, Lista* horarios, Lista* med
     }
 }
 
-bool busca_paciente(int cpf, Lista* pacientes, Consultas consulta){
-
+bool busca_paciente(int cpf, Lista* pacientes, Consultas* consulta){
+    return;
 }
 
-bool busca_medico(int crm, Lista* medicos, Consultas consulta){
-
+bool busca_medico(int crm, Lista* medicos, Consultas* consulta){
+    return;
 }
 
-void preenche_data(Lista* horarios, Consultas consulta){
+void preenche_data(Lista* horarios, Consultas* consulta){
     Data data_hora;
     int opt;
 
@@ -120,7 +120,7 @@ void preenche_data(Lista* horarios, Consultas consulta){
     }
 }
 
-Lista* insere_data(Lista* horarios, Data data_hora){
+Lista* insere_data(Lista* horarios, Data* data_hora){
     Lista* novo = (Lista*)malloc(sizeof(Lista));
     novo->info = data_hora;
     novo->prox = l;

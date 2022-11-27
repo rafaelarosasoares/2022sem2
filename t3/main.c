@@ -49,5 +49,7 @@ int main(void){
         }
     }while(opt != 0 || usuario == 0);
 
+    free_list();
+
     system("pause"); exit(0);
 }

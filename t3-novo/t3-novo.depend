@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1669566526 source:c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\auxiliar.c
+	"auxiliar.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+
+1669565152 c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\auxiliar.h
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+
+1669565399 source:c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\main.c
+	"auxiliar.h"
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<locale.h>
+

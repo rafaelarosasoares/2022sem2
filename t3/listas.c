@@ -4,12 +4,10 @@
 #include <string.h>
 #include <stdbool.h>
 
-Lista* cria_lista(void){
-    return NULL;
-}
+Lista* cria_lista(void){ return NULL; }
 
 void preenche_medico(Medicos* medico, Lista* l){
-    printf("\nPreencha os dados dos médicos: \n");
+    printf("\nPreencha os dados dos medicos: \n");
     int opt;
     char nome_med[50], area[50];
     for(int i = 0; opt != 0; i++){
@@ -20,7 +18,7 @@ void preenche_medico(Medicos* medico, Lista* l){
         scanf("%d", &medico->crm);
         printf("\nArea de atuacao: ");
         scanf("%[ ^\n]", area);
-        strcpy(medico.area, area);
+        strcpy(medico->area, area);
 
         l = insere_medicos(l, medico);
 
@@ -34,6 +32,10 @@ Lista* insere_medicos(Lista* l, Medicos* medico){
     novo->info = medico;
     novo->prox = l;
     return novo;
+}
+
+bool busca_medico(int crm, Lista* medicos, Consultas* consulta){
+    return;
 }
 
 void preenche_paciente(Pacientes* paciente, Lista* l){
@@ -94,15 +96,11 @@ bool busca_paciente(int cpf, Lista* pacientes, Consultas* consulta){
     return;
 }
 
-bool busca_medico(int crm, Lista* medicos, Consultas* consulta){
-    return;
-}
-
 void preenche_data(Lista* horarios, Consultas* consulta){
     Data data_hora;
     int opt;
 
-    for(i = 0; consulta.status != true; i++){
+    for(int i = 0; consulta.status != true; i++){
         printf("\nHora: ");
         scanf("%d", &data_hora.hora);
         printf("\nMinuto: ");
@@ -126,3 +124,5 @@ Lista* insere_data(Lista* horarios, Data* data_hora){
     return novo;
 }
 
+void free_list(Lista* l){
+}

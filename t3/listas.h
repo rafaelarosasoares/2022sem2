@@ -47,3 +47,4 @@ bool busca_paciente(int cpf, Lista* pacientes, Consultas* consulta);
 bool busca_medico(int crm, Lista* medicos, Consultas* consulta);
 void preenche_consulta(Lista* consultas, Consultas* consulta, Lista* horarios, Lista* medicos, Lista* pacientes);
 Lista* insere_consulta(Lista* l, Consultas consulta);
+void free_list(Lista* l);

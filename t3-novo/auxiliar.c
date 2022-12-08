@@ -2,106 +2,229 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>
 
-void menu(int* opt){
-    printf("Digite de acordo com a sua opcao: \n\n0 - sair do processo"
-           "\n1 - cadastrar medico; \n2 - cadastrar paciente;"
-           "\n3 - agendar consulta;\n4 - consultar;"
-           "\n5 - visualizar medicos; \n6 - visualizar pacientes;"
-           "\n7 - visualizar consultas;\n\n");
+int menu(int* opt){
+    printf("\nSelecione o que deseja: \n"
+           "1 - Inserir paciente\n"
+           "");
     scanf("%d", &*opt);
-}
-Lista* cria_lista(void){
-    return NULL;
+    return *opt;
 }
 
-void preenche_med(Lista* med_lst, Medico* medicos){
-    int opt;
-    char nome[50], area[100];
-    printf("\n\nDigite as informações necessárias para armazenar um novo médico: ");
-    for(int i = 0; opt != 0; i++){
-        printf("\nCRM: "); scanf("%d", &medicos->crm);
-        printf("\nNome completo: "); scanf(" %[^\n]", nome); strcpy(medicos->nome, nome);
-        printf("\nArea de atuacao: "); scanf(" %[^\n]", area); strcpy(medicos->area, area);
-        printf("\nTelefone-celular: "); scanf("%d", &medicos->tel_cel);
-        med_lst = insere_med(med_lst, medicos);
-        printf("\nDeseja continuar inserindo? Digite 0 para sair da inserção. "); scanf("%d", &opt); printf("\n");
+ListaPaciente* cria_paciente(){
+    ListaPaciente* lst = (ListaPaciente*)malloc(sizeof(ListaPaciente));
+    lst->insercao = NULL;
+    return lst;
+}
+
+ListaMedico* cria_medico(){
+    ListaMedico* lst = (ListaMedico*)malloc(sizeof(ListaMedico));
+    lst->insercao = NULL;
+    return lst;
+}
+
+ListaConsulta* cria_consulta(){
+    ListaConsulta* *lst = (ListaConsulta*)malloc(sizeof(ListaConsulta));
+    return lst;
+}
+
+ListaPaciente* setnull_paciente(ListaPaciente* lst){
+    return lst->insercao == NULL;
+}
+
+ListaMedico* setnull_medico(ListaMedico* lst){
+    return lst->insercao == NULL;
+}
+
+int setnull_consulta(ListaConsulta* *lst){
+    return (*lst == NULL);
+}
+
+void preenche_paciente(ListaPaciente* lst_paciente){
+    Pac* novo = (Pac*)malloc(sizeof(Pac));
+
+    printf("\nInserï¿½ï¿½o de paciente");
+
+    printf("\nNome: ");
+    scanf(" %[^\n]", novo->info.nome);
+
+    printf("\nCPF: ");
+    scanf("%d", &novo->info.cpf);
+
+    printf("\nTelefone-celular: ");
+    scanf("%d", &novo->info.tel_cel);
+
+    novo->prox = lst_paciente->insercao;
+
+    lst_paciente->insercao = novo;
+
+    printf("\nPaciente cadastrado!\n");
+}
+
+void preenche_medico(ListaMedico* lst_medico){
+    Med* novo = (Med*)malloc(sizeof(Med));
+
+    printf("\nInserï¿½ï¿½o de mï¿½dico");
+
+    printf("\nNome: ");
+    scanf(" %[^\n]", novo->info.nome);
+
+    printf("\nCRM: ");
+    scanf("%d", &novo->info.crm);
+
+    printf("\nTelefone-celular: ");
+    scanf("%d", &novo->info.tel_cel);
+
+    printf("\nï¿½rea de especialidade: ");
+    scanf(" %[^\n]", &novo->info.area);
+
+    novo->prox = lst_medico->insercao;
+
+    lst_medico->insercao = novo;
+
+    printf("\nMï¿½dico cadastrado!\n");
+}
+
+bool busca_med(int CRM, ListaMedico* lst){
+    Med* medico_busca;
+    for(medico_busca = lst->insercao; medico_busca != NULL; medico_busca = medico_busca->prox){
+        if (medico_busca->info.crm == CRM) return true;
+    }
+    return false;
+}
+
+bool busca_pac(int CPF, ListaPaciente* lst){
+    Pac* paciente_busca;
+    for(paciente_busca = lst->insercao; paciente_busca != NULL; paciente_busca = paciente_busca->prox){
+        if (paciente_busca->info.cpf == CPF) return true;
+    }
+    return false;
+}
+
+bool testa_hora(ListaConsulta* lst){
+    if((lst->info.data_hora.hora < 8) || (lst->info.data_hora.hora > 12 && lst->info.data_hora.hora < 14) || (lst->info.data_hora.hora > 18)) return false;
+    if((lst->info.data_hora.hora == 12 && lst->info.data_hora.minuto != 0) || lst->info.data_hora.hora == 18 && lst->info.data_hora.minuto != 0) return false;
+
+    return true;
+}
+
+bool testa_med_pac(ListaConsulta* lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac, int cpf, int crm){
+    ListaConsulta* cons_teste = (ListaConsulta*) malloc(sizeof(ListaConsulta));
+    ListaConsulta* temp = lst_consulta;
+    Pac* pac_teste; Med* med_teste;
+
+    for(pac_teste = lst_pac->insercao; pac_teste != NULL; pac_teste = pac_teste->prox){
+        if(pac_teste->info.cpf == cpf && med_teste->info.crm == crm){
+            cons_teste->paciente = pac_teste;
+            cons_teste->medico = med_teste;
+            return true;
+        } 
+    }
+
+    while(temp != NULL){
+            if(temp->medico->nome == cons_teste->medico->nome && temp->info.data_hora.mes == cons_teste->info.data_hora.mes && temp->info.data_hora.dia == cons_teste->info.data_hora.dia && temp->info.data_hora.hora == cons_teste->info.data_hora.hora && temp->info.status == true) return false;
+            if(temp->paciente->nome == cons_teste->paciente->nome && temp->info.data_hora.mes == cons_teste->info.data_hora.mes && temp->info.data_hora.dia == cons_teste->info.data_hora.dia && temp->info.data_hora.hora == cons_teste->info.data_hora.hora && temp->info.status == true) return false;
+            temp = temp->prox;
+    }
+
+    return false;
+}
+
+void cadastra_consulta(int cpf, int crm, ListaConsulta* lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac){
+    ListaConsulta* cons_teste = (ListaConsulta*) malloc(sizeof(ListaConsulta));
+    ListaConsulta* temp = lst_consulta;
+
+    printf("\nInsira a data da consulta:\n");
+    printf("\nDia: ");
+    scanf("%d", cons_teste->info.data_hora.dia);
+    printf("\nHora: ");
+    scanf("%d", cons_teste->info.data_hora.hora);
+    printf("\nMï¿½s: ");
+    scanf("%d", cons_teste->info.data_hora.mes);
+
+    if(!(testa_hora(cons_teste)) || (testa_med_pac(lst_consulta, lst_med, lst_pac, cpf, crm))){
+        cons_teste->info.status = false;
+        printf("\nNï¿½o foi possï¿½vel cadastrar a consulta.");
+    }else{
+        printf("\nConvï¿½nio: ");
+        scanf(" %[^\n]", cons_teste->info.convenio);
+        printf("\nDescriÃ§Ã£o da consulta: ");
+        scanf(" %[^\n]", cons_teste->info.descricao);
+        cons_teste->info.status = true;
+
+        cons_teste->prox = NULL;
+
+            if(lst_consulta == NULL) lst_consulta = cons_teste;
+            else{
+                ListaConsulta *aux = lst_consulta;
+                while(aux->prox != NULL)
+                    aux = aux ->prox;
+                aux ->prox = cons_teste;
+            }
+        printf("\nConsulta cadastrada! \n");
     }
 }
 
-Lista* insere_med(Lista* med_lst, Medico* medicos){
-    Lista* novo = (Lista*)malloc(sizeof(Lista));
-    novo->info = medicos;
-    novo->prox = med_lst;
-    return novo;
-}
+void agenda_consulta(ListaConsulta* lst_consulta, ListaMedico* lst_medico, ListaPaciente* lst_paciente){
+    int cpf, crm;
+    bool pac_cadastrado = false, med_cadastrado = false;
 
-void preenche_pac(Lista* pac_lst, Paciente* pacientes){
-    int opt;
-    char nome[50];
-    printf("\n\nDigite as informações necessárias para armazenar um novo paciente: ");
-    for(int i = 0; opt != 0; i++){
-        printf("\nCPF: "); scanf("%d", &pacientes->cpf);
-        printf("\nNome completo: "); scanf(" %[^\n]", nome); strcpy(pacientes->nome, nome);
-        printf("\nTelefone-celular: "); scanf("%d", &pacientes->tel_cel);
-        pac_lst = insere_pac(pac_lst, pacientes);
-        printf("\nDeseja continuar inserindo? Digite 0 para sair da inserção."); scanf("%d", &opt);
+    if((lst_medico != NULL) && (lst_paciente != NULL)){
+        printf("\nCRM do mï¿½dico: ");
+        scanf("%d", &crm);
+        printf("\nCPF do paciente: ");
+        scanf("%d", &cpf);
+        if (busca_med(crm, lst_medico)) med_cadastrado = true;
+        else printf("\nMï¿½dico nï¿½o cadastrado.");
+        if(busca_pac(cpf, lst_paciente)) pac_cadastrado = true;
+        else printf("\nPaciente nï¿½o cadastrado.");
     }
+    if(lst_medico == NULL) printf("\nNï¿½o hï¿½ nenhum mï¿½dico cadastrado no sistema.");
+    if(lst_paciente == NULL) printf("\nNï¿½o hï¿½ nenhum paciente cadastrado no sistema.");
 
+    if(pac_cadastrado && med_cadastrado) cadastra_consulta(cpf, crm, lst_consulta, lst_medico, lst_paciente);
 }
 
-Lista* insere_pac(Lista* pac_lst, Paciente* pacientes){
-    Lista* novo = (Lista*)malloc(sizeof(Lista));
-    novo->info = pacientes->cpf;
-    novo->prox = pac_lst;
-    return novo;
+void imprime_consultas(ListaConsulta* lst_consulta);
+void imprime_medicos(ListaMedico* lst_medico);
+void imprime_pacientes(ListaPaciente* lst_paciente);
+void cancela_consulta();
+
+void consultar(){
+
+}
+void libera_medicos(ListaMedico* lst){
+    Med* p = lst->insercao;
+
+    while (p != NULL)
+    {
+        Med* temp = p->prox;
+        free(p);
+        p = temp;
+    }
+    free(lst);
 }
 
-void agenda_consulta(Lista* pac_lst, Lista* med_lst, Consulta* consultas, Lista* cons, Lista* hora_consulta){
-    Data data_hora;
-    printf("\nAgendamento de consulta: ");
-    do{
-        printf("\n");
-    }while(!consultas->status);
+void libera_pacientes(ListaPaciente* lst){
+    Pac* p = lst->insercao;
+
+    while (p != NULL){
+        Pac* temp = p->prox;
+        free(p);
+        p = temp;
+    }
+    free(lst);
 }
 
-Lista* insere_consulta(Lista* cons, Consulta* consultas){
-}
-
-void consultando(Lista* cons){
-    printf("\nteste");
-}
-
-void imprime_med(Lista* med_lst){
-    Lista* p;
-    printf("\n\nMedicos cadastrados: \n");
-    for (p = med_lst; p != NULL; p = p->prox){
-        printf("\nMédico: %p\n", med_lst->info);
+void libera_consultas(ListaConsulta* *lst){
+    if(lst != NULL){
+        ListaConsulta* temp;
+        while(*lst != NULL)
+        {
+            temp = *lst;
+            *lst = (*lst)->prox;
+            free(temp);
+        }
+        free(lst);
     }
 }
-
-void imprime_pac(Lista* pac_lst){
-    printf("\nteste");
-}
-
-void imprime_cons(Lista* cons_lst){
-    printf("\nteste");
-}
-
-void cancela_consulta(Lista* cons){
-    printf("\nteste");
-}
-
-void remove_paciente(Lista* pac){
-    printf("\nteste");
-}
-
-void remove_medico(Lista* med){
-    printf("\nteste");
-}
-
-void libera_lista(Lista* l){
-
-}
-

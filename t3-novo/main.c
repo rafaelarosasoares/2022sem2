@@ -17,7 +17,7 @@ int main(void){
         switch(opt){
         case 0:
             system("cls");
-            printf("\n\nVocê saiu do processo.\n\n");
+            printf("\n\nVocï¿½ saiu do processo.\n\n");
             break;
         case 1:
             setnull_medico(medicos);
@@ -28,6 +28,7 @@ int main(void){
             preenche_paciente(pacientes);
             break;
         case 3:
+            setnull_consulta(consultas);
             agenda_consulta(consultas, medicos, pacientes);
             break;
         case 4:

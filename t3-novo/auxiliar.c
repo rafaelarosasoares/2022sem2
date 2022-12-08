@@ -6,7 +6,14 @@
 int menu(int* opt){
     printf("\nSelecione o que deseja: \n"
            "1 - Inserir paciente\n"
-           "");
+           "2 - Inserir médico\n"
+           "3 - Agendar consulta\n"
+           "4 - Desmarcar consulta\n"
+           "5 - Consultar\n"
+           "6 - Ver pacientes\n"
+           "7 - Ver médicos\n"
+           "8 - Ver consultas\n"
+           "0 - Sair");
     scanf("%d", &*opt);
     return *opt;
 }
@@ -185,10 +192,21 @@ void agenda_consulta(ListaConsulta* lst_consulta, ListaMedico* lst_medico, Lista
     if(pac_cadastrado && med_cadastrado) cadastra_consulta(cpf, crm, lst_consulta, lst_medico, lst_paciente);
 }
 
-void imprime_consultas(ListaConsulta* lst_consulta);
-void imprime_medicos(ListaMedico* lst_medico);
-void imprime_pacientes(ListaPaciente* lst_paciente);
-void cancela_consulta();
+void imprime_consultas(ListaConsulta* lst_consulta){
+
+}
+
+void imprime_medicos(ListaMedico* lst_medico){
+
+}
+
+void imprime_pacientes(ListaPaciente* lst_paciente){
+
+}
+
+void cancela_consulta(){
+
+}
 
 void consultar(){
 

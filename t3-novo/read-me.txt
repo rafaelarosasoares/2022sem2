@@ -1,0 +1,9 @@
+Nome: Rafaela da Rosa Soares
+Matrícula: 202211338
+
+- cadastra medico
+- cadastra paciente
+- cadastra consulta
+- lista consulta
+- consultar
+- acessar relatorio 1, 2, 3 e 4

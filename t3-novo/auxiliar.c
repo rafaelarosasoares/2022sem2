@@ -117,7 +117,7 @@ bool busca_pac(int CPF, ListaPaciente* lst){
 }
 
 bool testa_hora(ListaConsulta* lst){
-    if((lst->info.data_hora.hora < 8) || (lst->info.data_hora.hora > 12) && (lst->info.data_hora.hora < 14) || (lst->info.data_hora.hora > 18)) return false;
+    if(((lst->info.data_hora.hora < 8) || (lst->info.data_hora.hora > 12)) && ((lst->info.data_hora.hora < 14) || (lst->info.data_hora.hora > 18))) return false;
     if((lst->info.data_hora.hora) == 12 || (lst->info.data_hora.hora == 18)) return false;
 
     return true;
@@ -126,16 +126,15 @@ bool testa_hora(ListaConsulta* lst){
 bool testa_med_pac(ListaConsulta* *lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac, int cpf, int crm){
     ListaConsulta* cons_teste = (ListaConsulta*) malloc(sizeof(ListaConsulta));
     ListaConsulta* temp = *lst_consulta;
-    Pac* pac_teste; Med* med_teste;
 
-    for(pac_teste = lst_pac->insercao; pac_teste != NULL; pac_teste = pac_teste->prox){
+    for(Pac* pac_teste = lst_pac->insercao; pac_teste != NULL; pac_teste = pac_teste->prox){
         if(pac_teste->info.cpf == cpf){
             cons_teste->paciente = pac_teste;
             return true;
         }
     }
 
-    for(med_teste = lst_med->insercao; med_teste != NULL; med_teste = med_teste->prox){
+    for(Med* med_teste = lst_med->insercao; med_teste != NULL; med_teste = med_teste->prox){
         if(med_teste->info.crm == crm){
             cons_teste->medico = med_teste;
             return true;
@@ -163,7 +162,7 @@ void cadastra_consulta(int cpf, int crm, ListaConsulta* *lst_consulta, ListaMedi
     printf("\nMes: ");
     scanf("%d", &cons_teste->info.data_hora.mes);
 
-    if(!(testa_hora(cons_teste)) || !(testa_med_pac(lst_consulta, lst_med, lst_pac, cpf, crm))) printf("\nNao foi possivel cadastrar a consulta.");
+    if(!(testa_hora(cons_teste)) || !(testa_med_pac(*lst_consulta, lst_med, lst_pac, cpf, crm))) printf("\nNao foi possivel cadastrar a consulta.");
     else{
         printf("\nConvenio: ");
         scanf(" %[^\n]", cons_teste->info.convenio);
@@ -173,20 +172,19 @@ void cadastra_consulta(int cpf, int crm, ListaConsulta* *lst_consulta, ListaMedi
 
         cons_teste->prox = NULL;
 
-            if(lst_consulta == NULL) lst_consulta = cons_teste;
+            if(*lst_consulta == NULL) *lst_consulta = cons_teste;
             else{
-                ListaConsulta *aux = lst_consulta;
+                ListaConsulta *aux = *lst_consulta;
                 while(aux->prox != NULL)
                     aux = aux ->prox;
-                aux ->prox = cons_teste;
+                aux->prox = cons_teste;
             }
         printf("\nConsulta cadastrada! \n\n");
     }
 }
 
 void imprime_consultas(ListaConsulta* *lst_consulta){
-
-    for(ListaConsulta* p= *lst_consulta; p != NULL; p = p->prox){
+    for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox){
         printf("\nData: %d/%d as %dh00min", p->info.data_hora.dia, p->info.data_hora.mes, p->info.data_hora.hora);
 
         printf("\nConvenio: %s", p->info.convenio);
@@ -229,7 +227,7 @@ void agenda_consulta(ListaConsulta* *lst_consulta, ListaMedico* lst_medico, List
     if(lst_medico == NULL) printf("\nNao ha nenhum medico cadastrado no sistema.");
     if(lst_paciente == NULL) printf("\nNao ha nenhum paciente cadastrado no sistema.");
 
-    if(pac_cadastrado && med_cadastrado) cadastra_consulta(cpf, crm, lst_consulta, lst_medico, lst_paciente);
+    if(pac_cadastrado && med_cadastrado) cadastra_consulta(cpf, crm, *lst_consulta, lst_medico, lst_paciente);
 }
 
 void limpa_lst(ListaConsulta* *lst_consulta, ListaConsulta* p, int cpf, int mes, int hora, int dia){
@@ -241,7 +239,7 @@ void limpa_lst(ListaConsulta* *lst_consulta, ListaConsulta* p, int cpf, int mes,
     }
 
     if (p != NULL){
-        if (lst == NULL) lst_consulta = p->prox;
+        if (lst == NULL) *lst_consulta = p->prox;
         else lst->prox = p->prox;
         free(p);
     }
@@ -253,7 +251,7 @@ void limpa_lst(ListaConsulta* *lst_consulta, ListaConsulta* p, int cpf, int mes,
 void cancela_consulta(ListaConsulta* *lst_consulta){
     int cpf, dia, hora, mes;
     bool consulta_existente = false;
-    ListaConsulta* lst_nova = lst_consulta;
+    ListaConsulta* lst_nova = *lst_consulta;
 
     printf("\nPara desmarcar sua consulta, insira as informações abaixo: \n\n");
 
@@ -269,7 +267,7 @@ void cancela_consulta(ListaConsulta* *lst_consulta){
     printf("\nMes da consulta: ");
     scanf("%d", &mes);
 
-    for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox)
+    for(ListaConsulta* p = *lst_consulta; p != NULL; p = p->prox)
         if(p->info.data_hora.mes == mes && p->info.data_hora.dia == dia && p->info.data_hora.hora == hora && lst_nova->paciente->cpf == cpf)
         consulta_existente = true;
 
@@ -295,7 +293,7 @@ void consultar(ListaConsulta* *lst_consulta){
     printf("\nMes da consulta: ");
     scanf("%d", &mes);
 
-    for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox){
+    for(ListaConsulta* p = *lst_consulta; p != NULL; p = p->prox){
         if(p->info.data_hora.mes == mes && p->info.data_hora.dia == dia && p->info.data_hora.hora == hora && p->paciente->cpf == CPF){
             existe_consulta = true;
             p->info.status = false;
@@ -311,7 +309,7 @@ void relatorio_um(ListaConsulta* *lst_consulta){
     scanf("%d %d", &dia, &mes);
     printf("\nRELATORIO UM - CONSULTAS NO DIA %d DO MES %d", dia, mes);
 
-    for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox){
+    for(ListaConsulta* p = *lst_consulta; p != NULL; p = p->prox){
         if(p->info.data_hora.dia == dia && p->info.data_hora.mes == mes && !p->info.status){
             printf("\nData: %d/%d as %dh00min", p->info.data_hora.dia, p->info.data_hora.mes,p->info.data_hora.hora);
             printf("\nConvenio: %s", p->info.convenio);
@@ -335,7 +333,7 @@ void relatorio_dois(ListaConsulta* *lst_consulta){
     scanf("%d", &cpf);
 
     printf("\nRELATORIO UM - CONSULTAS DO PACIENTE VINCULADOS AO CPF %d", cpf);
-    for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox){
+    for(ListaConsulta* p = *lst_consulta; p != NULL; p = p->prox){
         if(p->paciente->cpf == cpf && p->info.status == false){
             printf("\nData: %d/%d-%dh00min", p->info.data_hora.dia, p->info.data_hora.mes, p->info.data_hora.hora);
             printf("\nConvenio: %s", p->info.convenio);
@@ -361,15 +359,15 @@ void relatorio_tres(ListaConsulta* *lst_consulta){
     printf("\nInforme CPF do paciente, hora, dia e mes da consulta: ");
     scanf("%d %d %d %d", &cpf, &hora, &dia, &mes);
 
-    for(ListaConsulta* p = lst_consulta; p != NULL; p -> prox){
+    for(ListaConsulta* p = *lst_consulta; p != NULL; p = p -> prox){
         if(p->info.data_hora.mes == mes && p->info.data_hora.dia == dia && p->info.data_hora.hora == hora &&  !p->info.status && p->paciente->cpf == cpf){
             printf("\nDescricao da consulta: %s\n", p->info.descricao);
             existe_consulta = true;
         }
+    }
 
     if(!existe_consulta)
         printf("\nNao existe descricao.!\n");
-    }
 }
 
 void relatorio_quatro(ListaConsulta* *lst_consulta){
@@ -382,7 +380,7 @@ void relatorio_quatro(ListaConsulta* *lst_consulta){
     printf("\nArea de especialidade: ");
     scanf(" %[^\n]", area);
 
-    for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox){
+    for(ListaConsulta* p = *lst_consulta; p != NULL; p = p->prox){
         if(p->info.data_hora.mes == mes && !(strcmp(area,p->medico->area)) && !p->info.status) printf("\nPaciente: %s", p->paciente->nome);
     }
 }
@@ -390,7 +388,7 @@ void relatorio_quatro(ListaConsulta* *lst_consulta){
 void relatorio_cinco(ListaConsulta* *lst_consulta, ListaMedico* lst_medico){
     for(Med* med = lst_medico->insercao; med != NULL; med = med->prox){
         printf("\nLista de pacientes que consultaram com medico %s\n", med->info.nome);
-        for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox){
+        for(ListaConsulta* p = *lst_consulta; p != NULL; p = p->prox){
             if(!(strcmp(p->medico->nome, med->info.nome)) && !p->info.status) printf("\n%s\n", p->paciente->nome);
         }
     }

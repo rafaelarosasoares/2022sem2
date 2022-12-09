@@ -44,7 +44,6 @@ struct lst_paciente{
     Pac* insercao;
 };
 
-//pega primeira posi��o de cada lista
 struct lst_medico{
     Med* insercao;
 };
@@ -78,13 +77,18 @@ void preenche_medico(ListaMedico* lst_medico);
 bool busca_med(int CRM, ListaMedico* lst);
 bool busca_pac(int CPF, ListaPaciente* lst);
 bool testa_hora(ListaConsulta* lst);
-bool testa_med_pac(ListaConsulta* lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac, int cpf, int crm);
-void cadastra_consulta(int cpf, int crm, ListaConsulta* lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac);
-void agenda_consulta(ListaConsulta* lst_consulta, ListaMedico* lst_medico, ListaPaciente* lst_paciente);
-void imprime_consultas(ListaConsulta* lst_consulta);
-void limpa_lst(ListaConsulta* lst_consulta, ListaConsulta* p, int cpf, int mes, int hora, int dia)
-void cancela_consulta(ListaConsulta* lst_consulta);
-void consultar(ListaConsulta* lst_consulta);
+bool testa_med_pac(ListaConsulta* *lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac, int cpf, int crm);
+void cadastra_consulta(int cpf, int crm, ListaConsulta* *lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac);
+void agenda_consulta(ListaConsulta* *lst_consulta, ListaMedico* lst_medico, ListaPaciente* lst_paciente);
+void imprime_consultas(ListaConsulta* *lst_consulta);
+void limpa_lst(ListaConsulta* *lst_consulta, ListaConsulta* p, int cpf, int mes, int hora, int dia);
+void cancela_consulta(ListaConsulta* *lst_consulta);
+void consultar(ListaConsulta* *lst_consulta);
+void relatorio_um(ListaConsulta* *lst_consulta);
+void relatorio_dois(ListaConsulta* *lst_consulta);
+void relatorio_tres(ListaConsulta* *lst_consulta);
+void relatorio_quatro(ListaConsulta* *lst_consulta);
+void relatorio_cinco(ListaConsulta* *lst_consulta, ListaMedico* lst_medico);
 void libera_medicos(ListaMedico* lst);
 void libera_pacientes(ListaPaciente* lst);
 void libera_consultas(ListaConsulta* *lst);

@@ -30,7 +30,7 @@ int main(void){
         switch(opt){
         case 0:
             system("cls");
-            printf("\n\nVoc� saiu do processo.\n\n");
+            printf("\n\nVoce saiu do processo.\n\n");
             break;
         case 1:
             system("cls");
@@ -52,12 +52,29 @@ int main(void){
             cancela_consulta(consultas);
             break;
         case 5:
-            imprime_pacientes(pacientes);
+            consultar(consultas);
             break;
         case 6:
-
+            imprime_consultas(consultas);
+            break;
+        case 7:
+            if (consultas == NULL) printf("\nNão existem consultas para mostrar.");
+            else relatorio_um(consultas);
+            break;
+        case 8:
+            relatorio_dois(consultas);
+            break;
+        case 9:
+            relatorio_tres(consultas);
+            break;
+        case 10:
+            relatorio_quatro(consultas);
+            break;
+        case 11:
+            relatorio_cinco(consultas, medicos);
+            break;
         }
-    }while(true);
+    }while(opt != 0);
 
     libera_medicos(medicos); libera_pacientes(pacientes);
     libera_consultas(consultas);

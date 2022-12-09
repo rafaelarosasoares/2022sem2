@@ -1,16 +1,17 @@
 # depslib dependency file v1.0
-1670288924 source:c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\auxiliar.c
+1670618516 source:c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\auxiliar.c
 	"auxiliar.h"
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
+	<string.h>
 
-1670288793 c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\auxiliar.h
+1670618958 c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\auxiliar.h
 	<stdio.h>
 	<stdlib.h>
 	<stdbool.h>
 
-1670288482 source:c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\main.c
+1670618784 source:c:\users\dell\documents\ci ncia da computa«√o\2 sem\lab2022\t3-novo\main.c
 	"auxiliar.h"
 	<stdio.h>
 	<stdlib.h>

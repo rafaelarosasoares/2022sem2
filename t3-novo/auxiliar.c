@@ -4,16 +4,20 @@
 #include <stdbool.h>
 
 int menu(int* opt){
-    printf("\nSelecione o que deseja: \n"
-           "1 - Inserir paciente\n"
-           "2 - Inserir médico\n"
-           "3 - Agendar consulta\n"
-           "4 - Desmarcar consulta\n"
-           "5 - Consultar\n"
-           "6 - Ver pacientes\n"
-           "7 - Ver médicos\n"
-           "8 - Ver consultas\n"
-           "0 - Sair");
+    printf("Selecione o que deseja: \n"
+    "0 - Sair do sistema\n"
+    "1 - Inserir paciente\n"
+    "2 - Inserir médico\n"
+    "3 - Agendar consulta\n"
+    "4 - Desmarcar consulta\n"
+    "5 - Consultar\n"
+    "6 - Ver consultas\n"
+    "7 - Relatório 1 - Listar todas as consultas agendadas para um certo dia\n"
+    "8 - Relatório 2 - Listar todas as consultas já realizadas por um paciente\n"
+    "9 - Relatório 3 - Listar as descrições textuais de uma determinada consulta\n"
+    "10 - Relatório 4 - Listar todos nomes de pacientes que consultaram na clínica com os médicos de uma determinada especialidade num determinado mês\n"
+    "11 - Relatório 5 - Para cada médico cadastrado, listar o nome de todos os pacientes que já consultaram com ele na clínica\n"
+    "\n");
     scanf("%d", &*opt);
     return *opt;
 }
@@ -110,7 +114,7 @@ bool busca_pac(int CPF, ListaPaciente* lst){
 
 bool testa_hora(ListaConsulta* lst){
     if((lst->info.data_hora.hora < 8) || (lst->info.data_hora.hora > 12 && lst->info.data_hora.hora < 14) || (lst->info.data_hora.hora > 18)) return false;
-    if((lst->info.data_hora.hora == 12 && lst->info.data_hora.minuto != 0) || lst->info.data_hora.hora == 18 && lst->info.data_hora.minuto != 0) return false;
+    if((lst->info.data_hora.hora) == 12 || (lst->info.data_hora.hora == 18)) return false;
 
     return true;
 }
@@ -138,6 +142,7 @@ bool testa_med_pac(ListaConsulta* lst_consulta, ListaMedico* lst_med, ListaPacie
 }
 
 void cadastra_consulta(int cpf, int crm, ListaConsulta* lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac){
+
     ListaConsulta* cons_teste = (ListaConsulta*) malloc(sizeof(ListaConsulta));
     ListaConsulta* temp = lst_consulta;
 
@@ -149,11 +154,9 @@ void cadastra_consulta(int cpf, int crm, ListaConsulta* lst_consulta, ListaMedic
     printf("\nM�s: ");
     scanf("%d", cons_teste->info.data_hora.mes);
 
-    if(!(testa_hora(cons_teste)) || (testa_med_pac(lst_consulta, lst_med, lst_pac, cpf, crm))){
-        cons_teste->info.status = false;
-        printf("\nN�o foi poss�vel cadastrar a consulta.");
-    }else{
-        printf("\nConv�nio: ");
+    if(!(testa_hora(cons_teste)) || !(testa_med_pac(lst_consulta, lst_med, lst_pac, cpf, crm))) printf("\nN�o foi poss�vel cadastrar a consulta.");
+    else{
+        printf("\nConvenio: ");
         scanf(" %[^\n]", cons_teste->info.convenio);
         printf("\nDescrição da consulta: ");
         scanf(" %[^\n]", cons_teste->info.descricao);
@@ -192,25 +195,79 @@ void agenda_consulta(ListaConsulta* lst_consulta, ListaMedico* lst_medico, Lista
     if(pac_cadastrado && med_cadastrado) cadastra_consulta(cpf, crm, lst_consulta, lst_medico, lst_paciente);
 }
 
-void imprime_consultas(ListaConsulta* lst_consulta){
+void limpa_lst(ListaConsulta* lst_consulta, ListaConsulta* p, int cpf, int mes, int hora, int dia){
+    ListaConsulta* lst = NULL;
+
+    while (p != NULL && p->info.data_hora.mes != mes && p->info.data_hora.dia != dia && p->info.data_hora.hora != hora  && p->paciente->cpf != cpf){
+        lst = p;
+        p = p->prox;
+    }
+
+    if (p != NULL){
+        if (lst == NULL) lst_consulta = p->prox;
+        else lst->prox = p->prox;
+        free(p);
+    }
+
+        printf("\nConsulta desmarcada com sucesso! \n");
 
 }
 
-void imprime_medicos(ListaMedico* lst_medico){
+void cancela_consulta(ListaConsulta* lst_consulta){
+    int cpf, dia, hora, mes;
+    bool consulta_existente = false;
+    ListaConsulta* lst_nova = lst_consulta;
 
+    printf("\nPara desmarcar sua consulta, insira as informações abaixo: \n\n");
+
+    printf("\nCPF do paciente: ");
+    scanf("%d", &cpf);
+
+    printf("\nHora da consulta: ");
+    scanf("%d", &hora);
+
+    printf("\nDia da consulta: ");
+    scanf("%d", &dia);
+    
+    printf("\nMês da consulta: ");
+    scanf("%d", &mes);
+
+    for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox)
+        if(p->info.data_hora.mes == mes && p->info.data_hora.dia == dia && p->info.data_hora.hora == hora && lst_nova->paciente->cpf == cpf)
+        consulta_existente = true;
+
+    if(consulta_existente) limpa_lst(lst_consulta, lst_nova, cpf, mes, hora, dia);
+    else printf("\nConsulta não encontrada no sistema.");
 }
 
-void imprime_pacientes(ListaPaciente* lst_paciente){
+void consultar(ListaConsulta* lst_consulta){
+    int CPF, mes, dia, hora;
+    bool existe_consulta = false;
 
+    printf("\nPara consultar, insira as informações referentes a sua consulta: ");
+
+    printf("\nCPF do paciente: ");
+    scanf("%d", &CPF);
+
+    printf("\nDia da consulta: ");
+    scanf("%d", &dia);
+
+    printf("\nHora da consulta: ");
+    scanf("%d", &hora);
+
+    printf("\nMês da consulta: ");
+    scanf("%d", &mes);
+
+    for(ListaConsulta* p = lst_consulta; p != NULL; p = p->prox){
+        if(p->info.data_hora.mes == mes && p->info.data_hora.dia == dia && p->info.data_hora.hora == hora && p->paciente->cpf == CPF){
+            existe_consulta = true;
+            p->info.status = false;
+            printf("\bConsulta realizada.");
+        }
+    }
+    if(!existe_consulta) printf("\nConsulta não encontrada.");
 }
 
-void cancela_consulta(){
-
-}
-
-void consultar(){
-
-}
 void libera_medicos(ListaMedico* lst){
     Med* p = lst->insercao;
 

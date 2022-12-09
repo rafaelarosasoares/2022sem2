@@ -18,7 +18,6 @@ struct data{
     int mes;
     int dia;
     int hora;
-    int minuto;
 };
 
 struct paciente{
@@ -83,10 +82,9 @@ bool testa_med_pac(ListaConsulta* lst_consulta, ListaMedico* lst_med, ListaPacie
 void cadastra_consulta(int cpf, int crm, ListaConsulta* lst_consulta, ListaMedico* lst_med, ListaPaciente* lst_pac);
 void agenda_consulta(ListaConsulta* lst_consulta, ListaMedico* lst_medico, ListaPaciente* lst_paciente);
 void imprime_consultas(ListaConsulta* lst_consulta);
-void imprime_medicos(ListaMedico* lst_medico);
-void imprime_pacientes(ListaPaciente* lst_paciente);
-void cancela_consulta();
-void consultar();
+void limpa_lst(ListaConsulta* lst_consulta, ListaConsulta* p, int cpf, int mes, int hora, int dia)
+void cancela_consulta(ListaConsulta* lst_consulta);
+void consultar(ListaConsulta* lst_consulta);
 void libera_medicos(ListaMedico* lst);
 void libera_pacientes(ListaPaciente* lst);
-void libera_consultas(ListaConsulta* lst);
+void libera_consultas(ListaConsulta* *lst);

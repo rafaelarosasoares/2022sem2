@@ -13,27 +13,48 @@ int main(void){
 
     do{
         menu(&opt);
-
+/*
+            "1 - Inserir paciente\n"
+           "2 - Inserir médico\n"
+           "3 - Agendar consulta\n"
+           "4 - Desmarcar consulta\n"
+           "5 - Consultar\n"
+           "6 - Ver consultas\n"
+           "7 - Relatório 1 - Listar todas as consultas agendadas para um certo dia"
+           "8 - Relatório 2 - Listar todas as consultas já realizadas por um paciente"
+           "9 - Relatório 3 - Listar as descrições textuais de uma determinada consulta"
+           "10 - Relatório 4 - Listar todos nomes de pacientes que consultaram na clínica com os médicos de uma determinada especialidade num determinado mês"
+           "11 - Relatório 5 - Para cada médico cadastrado, listar o nome de todos os pacientes que já consultaram com ele na clínica."
+           "0 - Sair");
+*/
         switch(opt){
         case 0:
             system("cls");
             printf("\n\nVoc� saiu do processo.\n\n");
             break;
         case 1:
-            setnull_medico(medicos);
-            preenche_medico(medicos);
-            break;
-        case 2:
+            system("cls");
             setnull_paciente(pacientes);
             preenche_paciente(pacientes);
             break;
+        case 2:
+            system("cls");
+            setnull_medico(medicos);
+            preenche_medico(medicos);
+            break;
         case 3:
+            system("cls");
             setnull_consulta(consultas);
             agenda_consulta(consultas, medicos, pacientes);
             break;
         case 4:
-            consultar();
+            system("cls");
+            cancela_consulta(consultas);
             break;
+        case 5:
+            imprime_pacientes(pacientes);
+            break;
+        case 6:
 
         }
     }while(true);
